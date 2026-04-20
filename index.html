@@ -7,481 +7,388 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --rose: #c2185b;
-  --rose-light: #f48fb1;
-  --rose-pale: #fce4ec;
-  --rose-deep: #880e4f;
-  --rose-mid: #e91e63;
-  --cream: #fff8f5;
-  --warm-white: #fffaf8;
-  --text-dark: #2a1a1f;
-  --text-mid: #6d4c5a;
-  --text-light: #b07090;
-  --border: #f0c8d8;
-  --gold: #c9984a;
-  --shadow: rgba(194, 24, 91, 0.1);
+  --rose:#c2185b; --rose-light:#f48fb1; --rose-pale:#fce4ec;
+  --rose-deep:#880e4f; --rose-mid:#e91e63;
+  --cream:#fff8f5; --warm-white:#fffaf8;
+  --text-dark:#2a1a1f; --text-light:#b07090;
+  --border:#f0c8d8; --shadow:rgba(194,24,91,0.1);
 }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle at 20% 20%,rgba(194,24,91,.05) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(233,30,99,.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.page{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:40px 20px 80px;}
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+header{text-align:center;margin-bottom:48px;}
+header .eyebrow{font-family:'Noto Serif SC',serif;font-size:11px;letter-spacing:6px;color:var(--rose-light);margin-bottom:12px;}
+header h1{font-family:'Noto Serif SC',serif;font-size:36px;font-weight:700;color:var(--rose-deep);line-height:1.2;margin-bottom:8px;}
+header p{font-size:13px;color:var(--text-light);letter-spacing:1px;}
+.divider{display:flex;align-items:center;gap:16px;margin:20px auto;width:200px;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--rose-light);}
+.divider span{color:var(--rose-light);font-size:14px;}
 
-body {
-  font-family: 'Noto Sans SC', sans-serif;
-  background: var(--cream);
-  color: var(--text-dark);
-  min-height: 100vh;
-}
+.panel{background:var(--warm-white);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:24px;box-shadow:0 4px 24px var(--shadow);}
+.panel-title{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:600;color:var(--rose-deep);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.panel-title .icon{width:28px;height:28px;border-radius:50%;background:var(--rose-pale);display:flex;align-items:center;justify-content:center;font-size:14px;}
 
-/* ── background pattern ── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(194,24,91,0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(233,30,99,0.04) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 0;
-}
+/* product cards */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.product-card{border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:white;transition:all .2s;position:relative;overflow:hidden;}
+.product-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--rose-pale);transition:background .2s;}
+.product-card.has-qty::before{background:var(--rose-mid);}
+.product-card:hover{border-color:var(--rose-light);box-shadow:0 2px 12px var(--shadow);}
+.product-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:4px;}
+.product-name{font-size:13px;font-weight:500;color:var(--text-dark);line-height:1.4;flex:1;}
+.product-tag{font-size:10px;padding:2px 7px;border-radius:99px;white-space:nowrap;flex-shrink:0;}
+.tag-top1{background:#fce4ec;color:#c2185b;} .tag-top2{background:#f3e5f5;color:#7b1fa2;}
+.tag-cloud{background:#e3f2fd;color:#1565c0;} .tag-limit{background:#fff3e0;color:#e65100;}
+.tag-new{background:#e8f5e9;color:#2e7d32;}
+.product-desc{font-size:11px;color:var(--text-light);margin-bottom:10px;line-height:1.5;}
+.product-bottom{display:flex;align-items:center;justify-content:space-between;}
+.product-price{font-family:'Noto Serif SC',serif;font-size:15px;color:var(--rose);font-weight:600;}
+.product-price span{font-size:11px;font-weight:400;color:var(--text-light);}
+.qty-ctrl{display:flex;align-items:center;gap:8px;}
+.qty-btn{width:26px;height:26px;border-radius:50%;border:1px solid var(--border);background:var(--cream);cursor:pointer;font-size:16px;color:var(--rose);display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:monospace;}
+.qty-btn:hover{background:var(--rose-pale);border-color:var(--rose-light);}
+.qty-btn:active{transform:scale(.92);}
+.qty-num{min-width:24px;text-align:center;font-size:14px;font-weight:500;color:var(--text-dark);}
 
-.page { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 40px 20px 80px; }
+/* boxes */
+.boxes-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.add-box-btn{display:flex;align-items:center;gap:6px;padding:8px 18px;border-radius:99px;border:1px dashed var(--rose-light);background:transparent;cursor:pointer;font-size:13px;color:var(--rose);font-family:'Noto Sans SC',sans-serif;transition:all .2s;}
+.add-box-btn:hover{background:var(--rose-pale);border-style:solid;}
 
-/* ── header ── */
-header { text-align: center; margin-bottom: 48px; }
-header .eyebrow {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 11px;
-  letter-spacing: 6px;
-  color: var(--rose-light);
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-header h1 {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 36px;
-  font-weight: 700;
-  color: var(--rose-deep);
-  line-height: 1.2;
-  margin-bottom: 8px;
-}
-header p {
-  font-size: 13px;
-  color: var(--text-light);
-  letter-spacing: 1px;
-}
-.divider {
-  display: flex; align-items: center; gap: 16px;
-  margin: 20px auto; width: 200px;
-}
-.divider::before, .divider::after {
-  content: ''; flex: 1; height: 1px; background: var(--rose-light);
-}
-.divider span { color: var(--rose-light); font-size: 14px; }
+.box-card{border:1px solid var(--border);border-radius:14px;margin-bottom:16px;overflow:hidden;transition:box-shadow .2s;}
+.box-card:hover{box-shadow:0 4px 16px var(--shadow);}
+.box-header-bar{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border);background:white;}
+.box-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.box-name-input{flex:1;border:none;background:transparent;font-family:'Noto Serif SC',serif;font-size:15px;font-weight:600;color:var(--rose-deep);outline:none;}
+.box-name-input::placeholder{color:var(--text-light);font-weight:400;}
+.box-meta{font-size:12px;color:var(--text-light);white-space:nowrap;}
+.box-del-btn{padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;cursor:pointer;font-size:11px;color:var(--text-light);transition:all .15s;}
+.box-del-btn:hover{border-color:#f44336;color:#f44336;background:#ffebee;}
 
-/* ── panels ── */
-.panel {
-  background: var(--warm-white);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 28px;
-  margin-bottom: 24px;
-  box-shadow: 0 4px 24px var(--shadow);
-}
-.panel-title {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--rose-deep);
-  margin-bottom: 20px;
-  display: flex; align-items: center; gap: 10px;
-}
-.panel-title .icon {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: var(--rose-pale);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px;
-}
+/* 10-slot grid */
+.box-slots{display:grid;grid-template-columns:repeat(5,1fr);}
+.slot{border-right:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 4px;position:relative;cursor:pointer;transition:background .15s;min-height:82px;}
+.slot:nth-child(5n){border-right:none;}
+.slot:nth-last-child(-n+5){border-bottom:none;}
+.slot.empty{background:white;}
+.slot.empty:hover{background:var(--rose-pale);}
+.slot.filled{background:var(--warm-white);}
+.slot.filled:hover{background:var(--rose-pale);}
+.slot-plus{font-size:22px;color:var(--border);line-height:1;}
+.slot-hint{font-size:9px;color:var(--text-light);margin-top:3px;}
+.slot-content{text-align:center;width:100%;padding:0 3px;}
+.slot-name{font-size:10px;font-weight:500;color:var(--text-dark);line-height:1.35;word-break:break-all;}
+.slot-price{font-size:10px;color:var(--rose);margin-top:2px;}
+/* slot number badge top-left */
+.slot-num{position:absolute;top:3px;left:5px;font-size:9px;color:var(--text-light);opacity:.6;}
+.slot-x{position:absolute;top:3px;right:4px;font-size:11px;color:var(--text-light);cursor:pointer;opacity:0;transition:opacity .15s;line-height:1;}
+.slot.filled:hover .slot-x{opacity:1;}
+.slot-x:hover{color:#f44336;}
 
-/* ── product catalog ── */
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 12px;
-}
-.product-card {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px 16px;
-  background: white;
-  transition: all 0.2s;
-  position: relative;
-  overflow: hidden;
-}
-.product-card::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 3px;
-  background: var(--rose-pale);
-  transition: background 0.2s;
-}
-.product-card.has-qty::before { background: var(--rose-mid); }
-.product-card:hover { border-color: var(--rose-light); box-shadow: 0 2px 12px var(--shadow); }
+/* box footer */
+.box-footer{display:flex;align-items:center;justify-content:space-between;padding:11px 18px;background:var(--cream);border-top:1px solid var(--border);}
+.box-progress-wrap{display:flex;align-items:center;gap:10px;flex:1;}
+.progress-bar-bg{width:100px;height:4px;background:var(--border);border-radius:2px;flex-shrink:0;}
+.progress-bar-fill{height:100%;border-radius:2px;transition:width .3s;}
+.box-progress-label{font-size:11px;white-space:nowrap;}
+.box-subtotal{font-family:'Noto Serif SC',serif;font-size:15px;color:var(--rose-deep);font-weight:600;}
 
-.product-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 4px; }
-.product-name { font-size: 13px; font-weight: 500; color: var(--text-dark); line-height: 1.4; flex: 1; }
-.product-tag {
-  font-size: 10px; padding: 2px 7px; border-radius: 99px;
-  white-space: nowrap; flex-shrink: 0;
-}
-.tag-top1 { background: #fce4ec; color: #c2185b; }
-.tag-top2 { background: #f3e5f5; color: #7b1fa2; }
-.tag-cloud { background: #e3f2fd; color: #1565c0; }
-.tag-limit { background: #fff3e0; color: #e65100; }
-.tag-new { background: #e8f5e9; color: #2e7d32; }
+/* summary */
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px;}
+.stat-card{background:white;border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
+.stat-label{font-size:11px;color:var(--text-light);margin-bottom:6px;letter-spacing:.5px;}
+.stat-value{font-family:'Noto Serif SC',serif;font-size:22px;font-weight:700;color:var(--rose-deep);}
+.stat-unit{font-size:12px;color:var(--text-light);font-weight:400;}
+.summary-bottom{display:flex;align-items:stretch;gap:16px;}
+.total-row{flex:1;display:flex;align-items:center;justify-content:space-between;background:var(--rose-deep);border-radius:12px;padding:18px 24px;color:white;}
+.total-label{font-size:14px;opacity:.85;letter-spacing:1px;}
+.total-amount{font-family:'Noto Serif SC',serif;font-size:28px;font-weight:700;}
+.export-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:16px 22px;border-radius:12px;border:2px solid var(--rose);background:white;cursor:pointer;font-size:12px;font-weight:500;color:var(--rose);font-family:'Noto Sans SC',sans-serif;transition:all .2s;white-space:nowrap;flex-shrink:0;}
+.export-btn:hover{background:var(--rose);color:white;}
+.export-btn svg{width:20px;height:20px;}
 
-.product-desc { font-size: 11px; color: var(--text-light); margin-bottom: 10px; line-height: 1.5; }
+.notice{font-size:11px;color:var(--text-light);background:var(--rose-pale);border-radius:8px;padding:10px 14px;margin-top:16px;line-height:1.7;}
+.empty-state{text-align:center;padding:40px 20px;color:var(--text-light);font-size:13px;}
+.empty-state .big{font-size:32px;margin-bottom:8px;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.box-card{animation:fadeIn .25s ease;}
 
-.product-bottom { display: flex; align-items: center; justify-content: space-between; }
-.product-price { font-family: 'Noto Serif SC', serif; font-size: 15px; color: var(--rose); font-weight: 600; }
-.product-price span { font-size: 11px; font-weight: 400; color: var(--text-light); }
+/* ════ PICKER MODAL ════ */
+.picker-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(42,26,31,.38);backdrop-filter:blur(3px);align-items:center;justify-content:center;}
+.picker-overlay.open{display:flex;}
+.picker-modal{background:white;border-radius:18px;width:min(600px,94vw);max-height:86vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.22);animation:modalIn .22s ease;}
+@keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
 
-.qty-ctrl { display: flex; align-items: center; gap: 8px; }
-.qty-btn {
-  width: 26px; height: 26px; border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--cream);
-  cursor: pointer;
-  font-size: 16px; line-height: 1;
-  color: var(--rose); display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s;
-  font-family: monospace;
-}
-.qty-btn:hover { background: var(--rose-pale); border-color: var(--rose-light); }
-.qty-btn:active { transform: scale(0.92); }
-.qty-num {
-  min-width: 24px; text-align: center;
-  font-size: 14px; font-weight: 500; color: var(--text-dark);
-}
+.picker-header{padding:18px 22px 0;flex-shrink:0;}
+.picker-title{font-family:'Noto Serif SC',serif;font-size:15px;font-weight:600;color:var(--rose-deep);margin-bottom:4px;}
+.picker-subtitle{font-size:11px;color:var(--text-light);margin-bottom:14px;}
+.picker-header-row{display:flex;align-items:flex-start;justify-content:space-between;}
+.picker-close{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:transparent;cursor:pointer;font-size:16px;color:var(--text-light);display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;}
+.picker-close:hover{background:var(--rose-pale);color:var(--rose);}
 
-/* ── box section ── */
-.boxes-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-.add-box-btn {
-  display: flex; align-items: center; gap: 6px;
-  padding: 8px 18px; border-radius: 99px;
-  border: 1px dashed var(--rose-light);
-  background: transparent; cursor: pointer;
-  font-size: 13px; color: var(--rose);
-  font-family: 'Noto Sans SC', sans-serif;
-  transition: all 0.2s;
-}
-.add-box-btn:hover { background: var(--rose-pale); border-style: solid; }
+/* product list in picker */
+.picker-list{overflow-y:auto;padding:0 12px 12px;flex:1;}
+.picker-list::-webkit-scrollbar{width:4px;}
+.picker-list::-webkit-scrollbar-thumb{background:var(--rose-light);border-radius:2px;}
+.picker-item{display:flex;align-items:center;gap:14px;padding:11px 12px;border-radius:11px;cursor:pointer;transition:all .12s;border:1.5px solid transparent;margin-bottom:5px;}
+.picker-item:hover{background:var(--rose-pale);border-color:var(--rose-light);}
+.picker-item.selected{background:var(--rose-pale);border-color:var(--rose);}
+.picker-item-left{flex:1;min-width:0;}
+.picker-item-name{font-size:13px;font-weight:500;color:var(--text-dark);line-height:1.4;margin-bottom:2px;}
+.picker-item-desc{font-size:11px;color:var(--text-light);line-height:1.4;}
+.picker-item-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;}
+.picker-item-price{font-family:'Noto Serif SC',serif;font-size:14px;color:var(--rose);font-weight:600;}
+.picker-item-tag{font-size:9px;padding:2px 7px;border-radius:99px;}
 
-.box-card {
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  margin-bottom: 16px;
-  overflow: hidden;
-  transition: box-shadow 0.2s;
-}
-.box-card:hover { box-shadow: 0 4px 16px var(--shadow); }
-.box-header-bar {
-  display: flex; align-items: center; gap: 12px;
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--border);
-}
-.box-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.box-name-input {
-  flex: 1; border: none; background: transparent;
-  font-family: 'Noto Serif SC', serif;
-  font-size: 15px; font-weight: 600; color: var(--rose-deep);
-  outline: none;
-}
-.box-name-input::placeholder { color: var(--text-light); font-weight: 400; }
-.box-meta { font-size: 12px; color: var(--text-light); white-space: nowrap; }
-.box-del-btn {
-  padding: 4px 10px; border-radius: 6px;
-  border: 1px solid var(--border);
-  background: transparent; cursor: pointer;
-  font-size: 11px; color: var(--text-light);
-  transition: all 0.15s;
-}
-.box-del-btn:hover { border-color: #f44336; color: #f44336; background: #ffebee; }
-
-.box-slots {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0;
-}
-.slot {
-  aspect-ratio: 1;
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 8px 4px;
-  position: relative; cursor: pointer;
-  transition: background 0.15s;
-  min-height: 70px;
-}
-.slot:nth-child(5n) { border-right: none; }
-.slot:nth-child(n+6) { /* last row */ }
-.slot:nth-last-child(-n+5) { border-bottom: none; }
-.slot.empty { background: white; }
-.slot.empty:hover { background: var(--rose-pale); }
-.slot.filled { background: var(--warm-white); }
-.slot.filled:hover { background: var(--rose-pale); }
-
-.slot-plus { font-size: 20px; color: var(--border); line-height: 1; }
-.slot-hint { font-size: 9px; color: var(--text-light); margin-top: 3px; }
-.slot-content { text-align: center; }
-.slot-name { font-size: 10px; font-weight: 500; color: var(--text-dark); line-height: 1.3; }
-.slot-price { font-size: 10px; color: var(--rose); margin-top: 3px; }
-.slot-x {
-  position: absolute; top: 3px; right: 4px;
-  font-size: 11px; color: var(--text-light);
-  line-height: 1; cursor: pointer;
-  opacity: 0; transition: opacity 0.15s;
-}
-.slot.filled:hover .slot-x { opacity: 1; }
-.slot-x:hover { color: #f44336; }
-
-/* dropdown picker */
-.slot-wrapper { position: relative; }
-.slot-dropdown {
-  display: none;
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 50%; transform: translateX(-50%);
-  z-index: 100;
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-  width: 220px;
-  max-height: 280px;
-  overflow-y: auto;
-  padding: 6px;
-}
-.slot-dropdown.open { display: block; }
-.slot-dropdown::-webkit-scrollbar { width: 4px; }
-.slot-dropdown::-webkit-scrollbar-track { background: transparent; }
-.slot-dropdown::-webkit-scrollbar-thumb { background: var(--rose-light); border-radius: 2px; }
-
-.dd-item {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 10px; border-radius: 8px; cursor: pointer;
-  font-size: 12px; color: var(--text-dark);
-  transition: background 0.1s;
-}
-.dd-item:hover { background: var(--rose-pale); }
-.dd-name { flex: 1; line-height: 1.3; }
-.dd-price { font-size: 12px; color: var(--rose); font-weight: 500; flex-shrink: 0; margin-left: 8px; }
-
-/* ── box footer ── */
-.box-footer {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 18px;
-  background: var(--cream);
-  border-top: 1px solid var(--border);
-}
-.box-progress-wrap { display: flex; align-items: center; gap: 10px; flex: 1; }
-.progress-bar-bg { flex: 1; height: 4px; background: var(--border); border-radius: 2px; max-width: 120px; }
-.progress-bar-fill { height: 100%; border-radius: 2px; background: var(--rose); transition: width 0.3s; }
-.box-progress-label { font-size: 11px; color: var(--text-light); white-space: nowrap; }
-.box-subtotal { font-family: 'Noto Serif SC', serif; font-size: 15px; color: var(--rose-deep); font-weight: 600; }
-
-/* ── summary ── */
-.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
-.stat-card {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-}
-.stat-label { font-size: 11px; color: var(--text-light); margin-bottom: 6px; letter-spacing: 0.5px; }
-.stat-value { font-family: 'Noto Serif SC', serif; font-size: 22px; font-weight: 700; color: var(--rose-deep); }
-.stat-unit { font-size: 12px; color: var(--text-light); font-weight: 400; }
-
-.total-row {
-  display: flex; align-items: center; justify-content: space-between;
-  background: var(--rose-deep);
-  border-radius: 12px;
-  padding: 18px 24px;
-  color: white;
-}
-.total-label { font-size: 14px; opacity: 0.85; letter-spacing: 1px; }
-.total-amount { font-family: 'Noto Serif SC', serif; font-size: 28px; font-weight: 700; }
-
-/* ── box color dots ── */
-.dot-colors = ['#e91e63','#9c27b0','#2196f3','#ff5722','#009688','#ff9800','#3f51b5','#4caf50'];
-
-/* ── empty state ── */
-.empty-state {
-  text-align: center; padding: 40px 20px;
-  color: var(--text-light); font-size: 13px;
-}
-.empty-state .big { font-size: 32px; margin-bottom: 8px; }
-
-/* ── animations ── */
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-.box-card { animation: fadeIn 0.25s ease; }
-
-/* ── notice ── */
-.notice {
-  font-size: 11px; color: var(--text-light);
-  background: var(--rose-pale);
-  border-radius: 8px; padding: 10px 14px;
-  margin-top: 16px; line-height: 1.7;
-}
+/* quantity bar at bottom of modal */
+.picker-footer{flex-shrink:0;border-top:1px solid var(--border);padding:14px 22px;background:var(--warm-white);}
+.picker-footer-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.selected-info{font-size:13px;color:var(--text-dark);}
+.selected-name{font-weight:500;color:var(--rose-deep);}
+.picker-qty-row{display:flex;align-items:center;gap:16px;}
+.picker-qty-label{font-size:13px;color:var(--text-light);white-space:nowrap;}
+.picker-qty-ctrl{display:flex;align-items:center;gap:10px;}
+.picker-qty-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);background:white;cursor:pointer;font-size:18px;color:var(--rose);display:flex;align-items:center;justify-content:center;transition:all .15s;font-family:monospace;}
+.picker-qty-btn:hover{background:var(--rose-pale);border-color:var(--rose-light);}
+.picker-qty-btn:active{transform:scale(.9);}
+.picker-qty-num{font-family:'Noto Serif SC',serif;font-size:22px;font-weight:700;color:var(--rose-deep);min-width:32px;text-align:center;}
+.picker-qty-hint{font-size:11px;color:var(--text-light);}
+.confirm-btn{margin-left:auto;padding:9px 24px;border-radius:99px;border:none;background:var(--rose);color:white;font-size:13px;font-weight:500;font-family:'Noto Sans SC',sans-serif;cursor:pointer;transition:all .15s;}
+.confirm-btn:hover{background:var(--rose-deep);}
+.confirm-btn:disabled{background:var(--border);color:var(--text-light);cursor:not-allowed;}
 </style>
 </head>
 <body>
 <div class="page">
-
   <header>
     <div class="eyebrow">新鲜现烤 · 匠心手作</div>
     <h1>🌹 鲜花饼采购系统</h1>
-    <p>选择商品 · 配置礼盒 · 自动计算</p>
+    <p>选择商品 · 配置礼盒 · 导出清单</p>
     <div class="divider"><span>❀</span></div>
   </header>
 
-  <!-- 商品选择 -->
   <div class="panel">
     <div class="panel-title"><div class="icon">①</div>选择采购商品</div>
     <div class="products-grid" id="productGrid"></div>
-    <div class="notice">
-      💡 点击 <strong>＋</strong> 增加数量，商品会自动分配到礼盒空位；点击 <strong>－</strong> 减少数量，会从最后一个礼盒中移除。也可以直接在礼盒格子中点击选择商品。
-    </div>
+    <div class="notice">💡 点击 ＋/－ 快速增减数量，自动填入礼盒；也可直接点击礼盒格子，弹出选品面板并设置数量后一键填入。</div>
   </div>
 
-  <!-- 礼盒配置 -->
   <div class="panel">
     <div class="boxes-header">
-      <div class="panel-title" style="margin-bottom:0"><div class="icon">②</div>礼盒配置 <span style="font-size:12px;color:var(--text-light);font-weight:400;margin-left:4px">每盒10枚，可混搭</span></div>
+      <div class="panel-title" style="margin-bottom:0"><div class="icon">②</div>礼盒配置<span style="font-size:12px;color:var(--text-light);font-weight:400;margin-left:6px">每盒10枚，可混搭</span></div>
       <button class="add-box-btn" onclick="addBox()">＋ 新增礼盒</button>
     </div>
     <div id="boxesArea"></div>
   </div>
 
-  <!-- 采购汇总 -->
   <div class="panel">
     <div class="panel-title"><div class="icon">③</div>采购汇总</div>
     <div class="summary-grid" id="statsGrid"></div>
-    <div class="total-row">
-      <span class="total-label">合计总价</span>
-      <span class="total-amount" id="grandTotal">¥ 0.0</span>
+    <div class="summary-bottom">
+      <div class="total-row">
+        <span class="total-label">合计总价</span>
+        <span class="total-amount" id="grandTotal">¥ 0.0</span>
+      </div>
+      <button class="export-btn" onclick="exportExcel()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/>
+        </svg>
+        导出 Excel
+      </button>
     </div>
   </div>
-
 </div>
 
+<!-- Picker Modal -->
+<div class="picker-overlay" id="pickerOverlay" onclick="closePicker()">
+  <div class="picker-modal" onclick="event.stopPropagation()">
+    <div class="picker-header">
+      <div class="picker-header-row">
+        <div>
+          <div class="picker-title" id="pickerTitle">选择商品</div>
+          <div class="picker-subtitle" id="pickerSubtitle"></div>
+        </div>
+        <button class="picker-close" onclick="closePicker()">✕</button>
+      </div>
+    </div>
+    <div class="picker-list" id="pickerList"></div>
+    <div class="picker-footer">
+      <div class="picker-footer-top">
+        <div class="selected-info">已选：<span class="selected-name" id="selectedName">请在上方选择商品</span></div>
+      </div>
+      <div class="picker-qty-row">
+        <span class="picker-qty-label">数量</span>
+        <div class="picker-qty-ctrl">
+          <button class="picker-qty-btn" onclick="pickerQtyChange(-1)">−</button>
+          <span class="picker-qty-num" id="pickerQtyNum">1</span>
+          <button class="picker-qty-btn" onclick="pickerQtyChange(1)">＋</button>
+        </div>
+        <span class="picker-qty-hint" id="pickerQtyHint"></span>
+        <button class="confirm-btn" id="confirmBtn" onclick="confirmPick()" disabled>填入格子</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 const PRODUCTS = [
-  { id:'P01', name:'手作经典玫瑰花饼', desc:'热销排行首位鲜花饼 经典之致', tag:'销量TOP1', tagClass:'tag-top1', price:4.0 },
-  { id:'P02', name:'云腿小饼', desc:'宣威老火腿 咸香酥润', tag:'云南名点', tagClass:'tag-cloud', price:3.5 },
-  { id:'P03', name:'招牌妙香玫瑰花饼', desc:'黄油制饼 创新手作', tag:'销量TOP2', tagClass:'tag-top2', price:5.0 },
-  { id:'P04', name:'妙香黑金玫瑰花饼', desc:'门店限定 天然食材', tag:'门店限定', tagClass:'tag-limit', price:6.5 },
-  { id:'P05', name:'白玉茉莉鲜花饼', desc:'优选云南元江茉莉花 清新口感', tag:'', tagClass:'', price:4.0 },
-  { id:'P06', name:'鎏金桂花鲜花饼', desc:'当季手打金桂 绵密酥口', tag:'', tagClass:'', price:4.0 },
-  { id:'P07', name:'抹茶玫瑰鲜花饼', desc:'创新日式抹茶粉 独特口感 清爽不腻', tag:'', tagClass:'', price:4.0 },
-  { id:'P08', name:'刺梨玫瑰鲜花饼', desc:'维生素C之王水果融合 臻选贵州刺梨', tag:'新品', tagClass:'tag-new', price:4.0 },
-  { id:'P09', name:'茅香玫瑰鲜花饼', desc:'云南高原苦荞 重瓣红玫瑰 外酥里润', tag:'', tagClass:'', price:4.0 },
-  { id:'P10', name:'木糖醇玫瑰鲜花饼', desc:'0蔗糖添加 控糖人群福音', tag:'', tagClass:'', price:4.0 },
-  { id:'P11', name:'杏仁玫瑰鲜花饼', desc:'36层酥皮 饱满杏仁片包裹 大颗松子入馅', tag:'', tagClass:'', price:4.5 },
-  { id:'P12', name:'雪媚娘玫瑰鲜花饼', desc:'Q弹雪媚娘包裹高原重瓣玫瑰花 唇齿留香', tag:'', tagClass:'', price:5.0 },
-  { id:'P13', name:'雪媚娘玫瑰蛋黄酥', desc:'咸香大颗蛋黄 高原重瓣玫瑰入馅 甜咸可口', tag:'', tagClass:'', price:5.5 },
-  { id:'P14', name:'云腿玫瑰鲜花饼', desc:'云南宣威高品质老火腿 融入饱满玫瑰花香', tag:'新品', tagClass:'tag-new', price:5.5 },
+  {id:'P01',name:'手作经典玫瑰花饼',desc:'热销排行首位鲜花饼 经典之致',tag:'销量TOP1',tagClass:'tag-top1',price:4.0},
+  {id:'P02',name:'云腿小饼',desc:'宣威老火腿 咸香酥润',tag:'云南名点',tagClass:'tag-cloud',price:3.5},
+  {id:'P03',name:'招牌妙香玫瑰花饼',desc:'黄油制饼 创新手作',tag:'销量TOP2',tagClass:'tag-top2',price:5.0},
+  {id:'P04',name:'妙香黑金玫瑰花饼',desc:'门店限定 天然食材',tag:'门店限定',tagClass:'tag-limit',price:6.5},
+  {id:'P05',name:'白玉茉莉鲜花饼',desc:'优选云南元江茉莉花 清新口感',tag:'',tagClass:'',price:4.0},
+  {id:'P06',name:'鎏金桂花鲜花饼',desc:'当季手打金桂 绵密酥口',tag:'',tagClass:'',price:4.0},
+  {id:'P07',name:'抹茶玫瑰鲜花饼',desc:'创新日式抹茶粉 独特口感 清爽不腻',tag:'',tagClass:'',price:4.0},
+  {id:'P08',name:'刺梨玫瑰鲜花饼',desc:'维生素C之王水果融合 臻选贵州刺梨',tag:'新品',tagClass:'tag-new',price:4.0},
+  {id:'P09',name:'茅香玫瑰鲜花饼',desc:'云南高原苦荞 重瓣红玫瑰 外酥里润',tag:'',tagClass:'',price:4.0},
+  {id:'P10',name:'木糖醇玫瑰鲜花饼',desc:'0蔗糖添加 控糖人群福音',tag:'',tagClass:'',price:4.0},
+  {id:'P11',name:'杏仁玫瑰鲜花饼',desc:'36层酥皮 饱满杏仁片包裹 大颗松子入馅',tag:'',tagClass:'',price:4.5},
+  {id:'P12',name:'雪媚娘玫瑰鲜花饼',desc:'Q弹雪媚娘包裹高原重瓣玫瑰花 唇齿留香',tag:'',tagClass:'',price:5.0},
+  {id:'P13',name:'雪媚娘玫瑰蛋黄酥',desc:'咸香大颗蛋黄 高原重瓣玫瑰入馅 甜咸可口',tag:'',tagClass:'',price:5.5},
+  {id:'P14',name:'云腿玫瑰鲜花饼',desc:'云南宣威高品质老火腿 融入饱满玫瑰花香',tag:'新品',tagClass:'tag-new',price:5.5},
 ];
-
 const BOX_COLORS = ['#e91e63','#9c27b0','#2196f3','#ff5722','#009688','#ff9800','#3f51b5','#4caf50'];
-
-let boxes = [];
-let boxCounter = 0;
 const pMap = {};
 PRODUCTS.forEach(p => pMap[p.id] = p);
 
-function productById(id) { return pMap[id]; }
+// slots: array of 10, each null or pid string
+let boxes = [], boxCounter = 0;
+let pickerState = null; // { bid, startIdx }
+let pickerPid = null, pickerQty = 1;
 
-function countQty(pid) {
-  let n = 0;
-  boxes.forEach(b => b.slots.forEach(s => { if(s===pid) n++; }));
-  return n;
-}
+/* ── helpers ── */
+function countQty(pid){ return boxes.reduce((n,b)=>n+b.slots.filter(s=>s===pid).length, 0); }
+function boxFilled(box){ return box.slots.filter(Boolean).length; }
+function boxAmt(box){ return box.slots.reduce((s,id)=>s+(id?pMap[id].price:0),0); }
+function freeSlots(box){ return box.slots.reduce((n,s,i)=>s===null?n+1:n, 0); }
 
-function addBox() {
+/* ── box/slot ops ── */
+function addBox(){
   boxCounter++;
-  boxes.push({ id:'box'+boxCounter, name:'礼盒'+boxCounter, slots: Array(10).fill(null), color: BOX_COLORS[(boxCounter-1)%BOX_COLORS.length] });
+  boxes.push({id:'box'+boxCounter, name:'礼盒'+boxCounter, color:BOX_COLORS[(boxCounter-1)%BOX_COLORS.length], slots:Array(10).fill(null)});
   render();
 }
+function removeBox(bid){ boxes=boxes.filter(b=>b.id!==bid); render(); }
 
-function removeBox(bid) {
-  boxes = boxes.filter(b=>b.id!==bid);
-  render();
-}
-
-function quickAdd(pid, delta) {
-  if(delta>0) {
-    let placed=false;
-    for(let b of boxes) {
-      const i=b.slots.indexOf(null);
-      if(i!==-1){b.slots[i]=pid;placed=true;break;}
-    }
-    if(!placed){
-      const nb={id:'box'+(++boxCounter),name:'礼盒'+boxCounter,slots:Array(10).fill(null),color:BOX_COLORS[(boxCounter-1)%BOX_COLORS.length]};
-      nb.slots[0]=pid; boxes.push(nb);
-    }
-  } else {
-    for(let i=boxes.length-1;i>=0;i--){
-      const b=boxes[i];
-      for(let j=b.slots.length-1;j>=0;j--){
-        if(b.slots[j]===pid){b.slots[j]=null;render();return;}
-      }
-    }
-  }
-  render();
-}
-
-function fillSlot(bid, idx, pid) {
-  const b=boxes.find(x=>x.id===bid);
-  if(b) b.slots[idx]=pid;
-  closeAllDropdowns();
-  render();
-}
-
-function clearSlot(bid, idx, e) {
+function clearSlot(bid, idx, e){
   e.stopPropagation();
   const b=boxes.find(x=>x.id===bid);
   if(b) b.slots[idx]=null;
   render();
 }
 
-function closeAllDropdowns() {
-  document.querySelectorAll('.slot-dropdown.open').forEach(d=>d.classList.remove('open'));
-}
-
-function toggleDropdown(bid, idx, e) {
-  e.stopPropagation();
-  const key=`dd_${bid}_${idx}`;
-  const el=document.getElementById(key);
-  if(!el) return;
-  const wasOpen=el.classList.contains('open');
-  closeAllDropdowns();
-  if(!wasOpen) {
-    el.classList.add('open');
-    // adjust position if near right edge
-    const rect=el.getBoundingClientRect();
-    if(rect.right>window.innerWidth-10){ el.style.left='auto'; el.style.right='0'; el.style.transform='none'; }
-    else { el.style.left=''; el.style.right=''; el.style.transform=''; }
+// Fill pid into box starting at startIdx, for qty slots
+function fillSlots(bid, startIdx, pid, qty){
+  const b=boxes.find(x=>x.id===bid); if(!b) return;
+  let filled=0;
+  // First fill from startIdx forward
+  for(let i=startIdx; i<10 && filled<qty; i++){
+    if(b.slots[i]===null){ b.slots[i]=pid; filled++; }
+  }
+  // If still need more, fill any remaining empty slots from beginning
+  for(let i=0; i<10 && filled<qty; i++){
+    if(b.slots[i]===null){ b.slots[i]=pid; filled++; }
   }
 }
 
-document.addEventListener('click', closeAllDropdowns);
+/* ── quick add from product card (fills first available box/slot) ── */
+function quickAdd(pid, delta){
+  if(delta>0){
+    let placed=false;
+    for(let b of boxes){
+      const i=b.slots.indexOf(null);
+      if(i!==-1){ b.slots[i]=pid; placed=true; break; }
+    }
+    if(!placed){
+      boxCounter++;
+      const nb={id:'box'+boxCounter,name:'礼盒'+boxCounter,color:BOX_COLORS[(boxCounter-1)%BOX_COLORS.length],slots:Array(10).fill(null)};
+      nb.slots[0]=pid; boxes.push(nb);
+    }
+  } else {
+    for(let i=boxes.length-1;i>=0;i--){
+      const b=boxes[i];
+      for(let j=b.slots.length-1;j>=0;j--){
+        if(b.slots[j]===pid){ b.slots[j]=null; render(); return; }
+      }
+    }
+  }
+  render();
+}
 
-/* ─── render ─── */
-function renderProducts() {
-  const grid=document.getElementById('productGrid');
-  grid.innerHTML = PRODUCTS.map(p=>{
+/* ── picker ── */
+function openPicker(bid, idx){
+  const b=boxes.find(x=>x.id===bid);
+  pickerState={bid,startIdx:idx};
+  pickerPid=null; pickerQty=1;
+
+  const free=freeSlots(b);
+  document.getElementById('pickerTitle').textContent=`为「${b.name}」第 ${idx+1} 格选品`;
+  document.getElementById('pickerSubtitle').textContent=`当前礼盒还有 ${free} 个空格`;
+  document.getElementById('selectedName').textContent='请在上方选择商品';
+  document.getElementById('pickerQtyNum').textContent='1';
+  document.getElementById('confirmBtn').disabled=true;
+  updateQtyHint(b, 1);
+
+  document.getElementById('pickerList').innerHTML = PRODUCTS.map(p=>`
+    <div class="picker-item" id="pitem_${p.id}" onclick="selectPickerProduct('${p.id}')">
+      <div class="picker-item-left">
+        <div class="picker-item-name">${p.name}</div>
+        <div class="picker-item-desc">${p.desc}</div>
+      </div>
+      <div class="picker-item-right">
+        <div class="picker-item-price">${p.price} 元/枚</div>
+        ${p.tag?`<span class="picker-item-tag ${p.tagClass}">${p.tag}</span>`:''}
+      </div>
+    </div>`).join('');
+  document.getElementById('pickerOverlay').classList.add('open');
+}
+
+function selectPickerProduct(pid){
+  pickerPid=pid;
+  document.querySelectorAll('.picker-item').forEach(el=>el.classList.remove('selected'));
+  document.getElementById('pitem_'+pid).classList.add('selected');
+  document.getElementById('selectedName').textContent=pMap[pid].name;
+  document.getElementById('confirmBtn').disabled=false;
+  const b=boxes.find(x=>x.id===pickerState.bid);
+  updateQtyHint(b, pickerQty);
+}
+
+function updateQtyHint(box, qty){
+  const free=freeSlots(box);
+  const hint=document.getElementById('pickerQtyHint');
+  if(!pickerPid){ hint.textContent=''; return; }
+  const actual=Math.min(qty, free);
+  hint.textContent = free===0 ? '格子已满' : `将填入 ${actual} 个格子`;
+}
+
+function pickerQtyChange(delta){
+  const b=boxes.find(x=>x.id===pickerState.bid);
+  const free=Math.max(1,freeSlots(b));
+  pickerQty=Math.max(1, Math.min(free, pickerQty+delta));
+  document.getElementById('pickerQtyNum').textContent=pickerQty;
+  updateQtyHint(b, pickerQty);
+}
+
+function confirmPick(){
+  if(!pickerPid||!pickerState) return;
+  fillSlots(pickerState.bid, pickerState.startIdx, pickerPid, pickerQty);
+  closePicker();
+  render();
+}
+
+function closePicker(){
+  document.getElementById('pickerOverlay').classList.remove('open');
+  pickerState=null; pickerPid=null; pickerQty=1;
+}
+
+/* ── render ── */
+function renderProducts(){
+  document.getElementById('productGrid').innerHTML=PRODUCTS.map(p=>{
     const qty=countQty(p.id);
     return `<div class="product-card ${qty>0?'has-qty':''}">
       <div class="product-top">
@@ -493,7 +400,7 @@ function renderProducts() {
         <div class="product-price">${p.price}<span> 元/枚</span></div>
         <div class="qty-ctrl">
           <button class="qty-btn" onclick="quickAdd('${p.id}',-1)">−</button>
-          <span class="qty-num" id="qty_${p.id}">${qty}</span>
+          <span class="qty-num">${qty}</span>
           <button class="qty-btn" onclick="quickAdd('${p.id}',1)">＋</button>
         </div>
       </div>
@@ -501,58 +408,45 @@ function renderProducts() {
   }).join('');
 }
 
-function renderBoxes() {
+function renderBoxes(){
   const area=document.getElementById('boxesArea');
-  if(boxes.length===0){
-    area.innerHTML=`<div class="empty-state"><div class="big">🎁</div>还没有礼盒，点击上方"新增礼盒"开始配置</div>`;
+  if(!boxes.length){
+    area.innerHTML=`<div class="empty-state"><div class="big">🎁</div>还没有礼盒，点击"新增礼盒"开始配置</div>`;
     return;
   }
-  area.innerHTML = boxes.map(box=>{
-    const filled=box.slots.filter(Boolean).length;
-    const total=box.slots.reduce((s,id)=>s+(id?pMap[id].price:0),0);
+  area.innerHTML=boxes.map(box=>{
+    const filled=boxFilled(box);
+    const total=boxAmt(box);
     const pct=Math.round(filled/10*100);
-
-    const ddItems=PRODUCTS.map(p=>
-      `<div class="dd-item" onclick="fillSlot('${box.id}',__IDX__,'${p.id}');event.stopPropagation()">
-        <span class="dd-name">${p.name}</span>
-        <span class="dd-price">${p.price}元</span>
-      </div>`
-    ).join('');
 
     const slotsHtml=box.slots.map((sid,idx)=>{
       if(sid){
         const p=pMap[sid];
-        const short=p.name.replace(/鲜花饼|花饼/g,'').slice(0,5);
-        return `<div class="slot filled" onclick="toggleDropdown('${box.id}',${idx},event)">
+        return `<div class="slot filled" onclick="openPicker('${box.id}',${idx})">
+          <span class="slot-num">${idx+1}</span>
           <span class="slot-x" onclick="clearSlot('${box.id}',${idx},event)">✕</span>
           <div class="slot-content">
-            <div class="slot-name">${short}</div>
+            <div class="slot-name">${p.name}</div>
             <div class="slot-price">${p.price}元</div>
-          </div>
-          <div class="slot-dropdown" id="dd_${box.id}_${idx}" onclick="event.stopPropagation()">
-            ${ddItems.replace(/__IDX__/g, idx)}
-          </div>
-        </div>`;
-      } else {
-        return `<div class="slot empty" onclick="toggleDropdown('${box.id}',${idx},event)">
-          <div class="slot-plus">＋</div>
-          <div class="slot-hint">点击选品</div>
-          <div class="slot-dropdown" id="dd_${box.id}_${idx}" onclick="event.stopPropagation()">
-            ${ddItems.replace(/__IDX__/g, idx)}
           </div>
         </div>`;
       }
+      return `<div class="slot empty" onclick="openPicker('${box.id}',${idx})">
+        <span class="slot-num">${idx+1}</span>
+        <div class="slot-plus">＋</div>
+        <div class="slot-hint">点击选品</div>
+      </div>`;
     }).join('');
 
-    const warn = filled<10
-      ? `<span class="box-progress-label" style="color:#ff9800">还差${10-filled}枚满盒</span>`
-      : `<span class="box-progress-label" style="color:#4caf50">✓ 已满盒</span>`;
+    const warn = filled===10
+      ? `<span class="box-progress-label" style="color:#4caf50">✓ 已满盒</span>`
+      : `<span class="box-progress-label" style="color:var(--text-light)">还差 ${10-filled} 枚满盒</span>`;
 
     return `<div class="box-card">
       <div class="box-header-bar">
         <div class="box-dot" style="background:${box.color}"></div>
         <input class="box-name-input" value="${box.name}" placeholder="为礼盒命名…"
-          onchange="boxes.find(b=>b.id==='${box.id}').name=this.value; renderSummary()">
+          oninput="boxes.find(b=>b.id==='${box.id}').name=this.value;renderSummary()">
         <span class="box-meta">${filled}/10 枚 · ¥${total.toFixed(1)}</span>
         <button class="box-del-btn" onclick="removeBox('${box.id}')">删除</button>
       </div>
@@ -568,24 +462,58 @@ function renderBoxes() {
   }).join('');
 }
 
-function renderSummary() {
-  const totalPcs = boxes.reduce((s,b)=>s+b.slots.filter(Boolean).length,0);
-  const totalAmt = boxes.reduce((s,b)=>s+b.slots.reduce((a,id)=>a+(id?pMap[id].price:0),0),0);
-  const kinds = new Set(boxes.flatMap(b=>b.slots.filter(Boolean))).size;
-
-  document.getElementById('statsGrid').innerHTML = `
+function renderSummary(){
+  const totalPcs=boxes.reduce((s,b)=>s+boxFilled(b),0);
+  const totalAmt=boxes.reduce((s,b)=>s+boxAmt(b),0);
+  const kinds=new Set(boxes.flatMap(b=>b.slots.filter(Boolean))).size;
+  document.getElementById('statsGrid').innerHTML=`
     <div class="stat-card"><div class="stat-label">礼盒数量</div><div class="stat-value">${boxes.length}<span class="stat-unit"> 盒</span></div></div>
     <div class="stat-card"><div class="stat-label">商品种类</div><div class="stat-value">${kinds}<span class="stat-unit"> 种</span></div></div>
     <div class="stat-card"><div class="stat-label">采购总枚数</div><div class="stat-value">${totalPcs}<span class="stat-unit"> 枚</span></div></div>
-    <div class="stat-card"><div class="stat-label">均价</div><div class="stat-value">${totalPcs?'¥'+(totalAmt/totalPcs).toFixed(1):'—'}</div></div>
-  `;
-  document.getElementById('grandTotal').textContent = '¥ ' + totalAmt.toFixed(1);
+    <div class="stat-card"><div class="stat-label">均价</div><div class="stat-value">${totalPcs?'¥'+(totalAmt/totalPcs).toFixed(1):'—'}</div></div>`;
+  document.getElementById('grandTotal').textContent='¥ '+totalAmt.toFixed(1);
 }
 
-function render() {
-  renderProducts();
-  renderBoxes();
-  renderSummary();
+function render(){ renderProducts(); renderBoxes(); renderSummary(); }
+
+/* ── Excel export ── */
+function exportExcel(){
+  const wb=XLSX.utils.book_new();
+  const totalPcs=boxes.reduce((s,b)=>s+boxFilled(b),0);
+  const totalAmt=boxes.reduce((s,b)=>s+boxAmt(b),0);
+
+  // Sheet 1: 商品汇总
+  const prodRows=[['商品名称','单价（元/枚）','采购总枚数','小计（元）','标签']];
+  PRODUCTS.forEach(p=>{ const qty=countQty(p.id); if(qty>0) prodRows.push([p.name,p.price,qty,+(p.price*qty).toFixed(1),p.tag||'']); });
+  prodRows.push([''],['合计','',totalPcs,+totalAmt.toFixed(1),'']);
+  const ws1=XLSX.utils.aoa_to_sheet(prodRows);
+  ws1['!cols']=[{wch:24},{wch:14},{wch:12},{wch:12},{wch:12}];
+  XLSX.utils.book_append_sheet(wb,ws1,'商品汇总');
+
+  // Sheet 2: 礼盒明细
+  const boxRows=[['礼盒名称','格次','商品名称','单价（元/枚）','标签']];
+  boxes.forEach(box=>{
+    box.slots.forEach((sid,idx)=>{
+      const p=sid?pMap[sid]:null;
+      boxRows.push([box.name,`第${idx+1}枚`,p?p.name:'（空）',p?p.price:'',p&&p.tag?p.tag:'']);
+    });
+    boxRows.push([`【${box.name}小计】`,'','',+boxAmt(box).toFixed(1),'']);
+    boxRows.push(['']);
+  });
+  const ws2=XLSX.utils.aoa_to_sheet(boxRows);
+  ws2['!cols']=[{wch:18},{wch:10},{wch:24},{wch:14},{wch:12}];
+  XLSX.utils.book_append_sheet(wb,ws2,'礼盒明细');
+
+  // Sheet 3: 汇总一览
+  const kinds=new Set(boxes.flatMap(b=>b.slots.filter(Boolean))).size;
+  const sumRows=[['鲜花饼采购汇总',''],[''],['礼盒数量',`${boxes.length} 盒`],['采购总枚数',`${totalPcs} 枚`],['商品种类',`${kinds} 种`],['合计金额',`¥${totalAmt.toFixed(1)}`],[''],['礼盒名称','枚数','金额（元）']];
+  boxes.forEach(box=>sumRows.push([box.name,boxFilled(box),+boxAmt(box).toFixed(1)]));
+  const ws3=XLSX.utils.aoa_to_sheet(sumRows);
+  ws3['!cols']=[{wch:20},{wch:10},{wch:14}];
+  XLSX.utils.book_append_sheet(wb,ws3,'汇总一览');
+
+  const d=new Date();
+  XLSX.writeFile(wb,`鲜花饼采购单_${d.getMonth()+1}月${d.getDate()}日.xlsx`);
 }
 
 render();
